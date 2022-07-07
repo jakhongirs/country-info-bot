@@ -24,7 +24,15 @@ def country(update: Update, context: CallbackContext):
 
         result = response.json()
 
-        update.message.reply_text(result[0]['name']['common'])
+        print(list(result[0]['currencies'].values())[0]['name'])
+
+        update.message.reply_text(
+            f"🌎 Davlat: {result[0]['name']['common']}\n"
+            f"📍 Joylashuvi: {result[0]['subregion']}\n"
+            f"🗣 Davlat tili: {list(result[0]['languages'].values())[0]}\n"
+            f"💱 Pul birligi: {list(result[0]['currencies'].values())[0]['name']}\n"
+            f"🗺 Maydoni: {result[0]['area']}\n"
+            f"👨‍👩‍👧 Aholi soni: {result[0]['population']}")
 
 
 dispatcher = updater.dispatcher
