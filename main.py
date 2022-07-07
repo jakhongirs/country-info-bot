@@ -18,21 +18,23 @@ def country(update: Update, context: CallbackContext):
     if len(args) == 0:
         update.message.reply_text("Notug'ri formatdagi so'rov! Misol: /country Uzbekistan")
     else:
-        country_text = ' '.join(args)
+        try:
+            country_text = ' '.join(args)
 
-        response = requests.get(f'https://restcountries.com/v3.1/name/{country_text}')
+            response = requests.get(f'https://restcountries.com/v3.1/name/{country_text}')
 
-        result = response.json()
+            result = response.json()
 
-        print(list(result[0]['currencies'].values())[0]['name'])
-
-        update.message.reply_text(
-            f"🌎 Davlat: {result[0]['name']['common']}\n"
-            f"📍 Joylashuvi: {result[0]['subregion']}\n"
-            f"🗣 Davlat tili: {list(result[0]['languages'].values())[0]}\n"
-            f"💱 Pul birligi: {list(result[0]['currencies'].values())[0]['name']}\n"
-            f"🗺 Maydoni: {result[0]['area']}\n"
-            f"👨‍👩‍👧 Aholi soni: {result[0]['population']}")
+            update.message.reply_text(
+                f"🌎 Davlat: {result[0]['name']['common']}\n"
+                f"📍 Joylashuvi: {result[0]['subregion']}\n"
+                f"📍 Poytaxt: {result[0]['capital'][0]}\n"
+                f"🗣 Davlat tili: {list(result[0]['languages'].values())[0]}\n"
+                f"💱 Pul birligi: {list(result[0]['currencies'].values())[0]['name']}\n"
+                f"🗺 Maydoni: {result[0]['area']}\n"
+                f"👨‍👩‍👧 Aholi soni: {result[0]['population']}")
+        except:
+            update.message.reply_text("Davlat nomini to'g'ri kiriting!")
 
 
 dispatcher = updater.dispatcher
